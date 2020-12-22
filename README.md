@@ -1,8 +1,8 @@
 # Network
 
-This is a simple, Twitter-like social network that allows users to make posts, follow other users, and “like” posts.
+    This is a simple, Twitter-like social network that allows users to make posts, follow other users, and “like” posts.
 
-The code is in Python, JavaScript, HTML, and CSS.
+    The code is in Python, JavaScript, HTML, and CSS.
 
 ### List of most important tools used in this project are :
 
