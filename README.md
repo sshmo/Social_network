@@ -42,3 +42,6 @@ Register:
 
 Main page
 ![Main_page](Screenshot_2020-12-22 Social Network(1).png)
+
+
+
