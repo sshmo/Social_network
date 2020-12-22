@@ -1,8 +1,10 @@
 # Network
 
-This is a simple, Twitter-like social network that allows users to make posts, follow other users, and “like” posts.
+A simple, Twitter-like social network that allows users to make posts, follow other users, and “like” posts.
 
 The code is in Python, JavaScript, HTML, and CSS.
+
+![Main_page](Screenshot_2020-12-22_Social_Network(1).png)
 
 ### List of most important tools used in this project are :
 
@@ -34,14 +36,3 @@ The code is in Python, JavaScript, HTML, and CSS.
 * __Edit Post:__ : Users can click an “Edit” button on any of their own posts to edit that post.
 
 * __“Like” and “Unlike”:__ Users scan click a button on any post to toggle whether or not they “like” that post.
-
-### Screenshots:
-
-Register:
-![Register](./Screenshot_2020-12-22_Social_Network.png)
-
-Main page
-![Main_page](Screenshot_2020-12-22_Social_Network(1).png)
-
-
-
