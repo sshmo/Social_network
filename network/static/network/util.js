@@ -44,11 +44,15 @@ function save(post_id) {
     save_btn.parentNode.removeChild(save_btn)
 
     // Save post in database
-    fetch(`/posts/${post_id}`, {
+    fetch(`/post/${post_id}/`, {
         method: "PUT",
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json',
+          },
         body: JSON.stringify({
-        edit: post_content,
-        }),
+            edit: post_content,
+        })
     });
 }
 
@@ -61,7 +65,7 @@ function like(ids) {
     var likes =  parseInt(document.getElementById(`likes${post_id}`).innerHTML)
 
     // get the post likers
-    fetch(`/posts/${post_id}`)
+    fetch(`/post/${post_id}/`)
     .then((response) => response.json())
     .then((post) => {
         
@@ -83,7 +87,7 @@ function like(ids) {
         document.getElementById(`likes${post_id}`).innerHTML = likes
 
         // Save post in database
-        fetch(`/posts/${post_id}`, {
+        fetch(`/post/${post_id}/`, {
             method: "PUT",
             body: JSON.stringify({
                 liked: liked,

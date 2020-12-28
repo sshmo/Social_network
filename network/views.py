@@ -10,10 +10,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_exempt
 
-from rest_framework.parsers import JSONParser
 
-
-from network.serializers import PostSerializer
 from network.models import User, Post, Follow
 
 
@@ -326,49 +323,40 @@ def posts(request, post_id):
 
 
 @csrf_exempt
-def post_list(request):
-    """
-    List all code snippets, or create a new snippet.
-    """
-    if request.method == 'GET':
-        posts = Post.objects.all()
-        serializer = PostSerializer(posts, many=True)
-        return JsonResponse(serializer.data, safe=False)
-
-    elif request.method == 'POST':
-        data = JSONParser().parse(request)
-        serializer = PostSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return JsonResponse(serializer.data, status=201)
-        return JsonResponse(serializer.errors, status=400)
-
-
-@csrf_exempt
 def post_detail(request, pk):
     """
     Retrieve, update or delete a post.
     """
     try:
-        post = Post.objects.get(pk=pk)
+        post_obj = Post.objects.get(pk=pk)
     except Post.DoesNotExist:
-        return HttpResponse(status=404)
+        JsonResponse({"error": "Post not found."}, status=404)
 
     if request.method == 'GET':
-        serializer = PostSerializer(post)
+        serializer = PostSerializer(post_obj)
         return JsonResponse(serializer.data)
 
     elif request.method == 'PUT':
         data = JSONParser().parse(request)
-        serializer = PostSerializer(post, data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return JsonResponse(serializer.data)
-        return JsonResponse(serializer.errors, status=400)
 
+        # Attemp to edit a post content
+        if data.get("edit") is not None:
+            post_obj.post = data["edit"]
 
-    # Post must be via GET or PUT
-    else:
-        return JsonResponse({
-            "error": "GET or PUT request required."
-        }, status=400)
+        # Attemp to like/unlike a post
+        if data.get("liked") is not None:
+
+            if data["liked"]:
+                post_obj.likers.add(User.objects.get(pk=int(data["user"])))
+
+            else:
+                post_obj.likers.remove(User.objects.get(pk=int(data["user"])))
+
+        post_obj.save()
+        return HttpResponse(status=204)
+
+        # serializer = PostSerializer(post, data=data)
+        # if serializer.is_valid():
+        #     serializer.save()
+        #     return JsonResponse(serializer.data)
+    return JsonResponse(serializer.errors, status=400)
