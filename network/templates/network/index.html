@@ -32,7 +32,7 @@
     
         {% for post in page_obj %}
             <p class="text-info d-flex rounded mx-auto my-0 p-1" style="width:90% ;">
-                <a href="{% url 'network:profile' post.poster.id %}"> {{post.poster}}</a>         
+                <a id="poster{{post.id}}" href="{% url 'network:profile' post.poster.id %}"> {{post.poster}}</a>         
                 <small class="text-secondary text-right p-1">
                     posted {{post.post_time}} 
                 </small>
